@@ -20,17 +20,18 @@ public class LoginController {
 		return "index";
 	}
 	
-	@RequestMapping(value="/doLogin", method=RequestMethod.POST)
+	@RequestMapping(value="/welcome.html")
 	public String doLogin(@ModelAttribute("credentials") CredentialsForm credentials) {
 		// TODO remove, checking java 1.7 compliance
-		List<String> list = new ArrayList<>();
-		list.add("admin");
-		if (credentials.getLogin().equals(list.get(0)) &&
-				credentials.getPassword().equals(list.get(0))) {
-			return "welcome";
-		} else {
-			return "index";
-		}
+//		List<String> list = new ArrayList<>();
+//		list.add("admin");
+//		if (credentials.getLogin().equals(list.get(0)) &&
+//				credentials.getPassword().equals(list.get(0))) {
+//			return "welcome";
+//		} else {
+//			return "index";
+//		}
+		return "welcome";
 	}
 
 }

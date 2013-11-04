@@ -4,7 +4,7 @@
 </head>
 <body>
 
-	<form action="#" th:object="${credentials}" th:action="@{/doLogin}" method="post">
+	<!-- <form action="#" th:object="${credentials}" th:action="@{/doLogin}" method="post">
 		<fieldset>
 			<div>
 				<label>Login: </label> <input type="text" th:field="*{login}" />
@@ -18,7 +18,9 @@
 			</div>
 
 		</fieldset>
-	</form>
+	</form> -->
+	
+	<a th:href="@{/welcome.html}">go to admin panel</a>
 
 </body>
 </html>
