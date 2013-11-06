@@ -17,9 +17,17 @@
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<mysql-connector-java.version>5.1.23</mysql-connector-java.version>
 		<thymeleaf-spring3.version>2.0.18</thymeleaf-spring3.version>
-		<spring-social-twitter.version>1.0.5.RELEASE</spring-social-twitter.version>
+		<spring-social-twitter.version>1.1.0.M4</spring-social-twitter.version>
 		<slf4j-api.version>1.7.2</slf4j-api.version>
 	</properties>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>http://repo.spring.io/libs-milestone</url>
+        </repository>
+    </repositories>
 
 	<dependencies>
 
