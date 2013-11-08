@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>title</title>
+<meta charset="utf-8"/>
+<title>Index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content=""/>
+<meta name="author" content=""/>
+
+
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="/resources/css/bootstrap-responsive.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap-responsive.min.css}"/>
 </head>
 <body>
 
@@ -25,6 +38,8 @@
 	<br/>
 	<a th:href="@{/connect/twitter}">go to twitter connection</a>
 	
+	<script src="/resources/js/jquery-1.10.2.min.js" th:src="@{/resources/js/jquery-1.10.2.min.js}"></script>	
+    <script src="/resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>	
 
 </body>
 </html>

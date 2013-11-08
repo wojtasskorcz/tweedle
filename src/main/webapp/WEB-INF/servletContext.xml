@@ -19,13 +19,13 @@
 
 	<context:component-scan base-package="agh.sr.tweedle" />
 
-	<mvc:resources mapping="/static/**" location="/static/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" 
 		/> <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> 
 		</bean> -->
 
-	<mvc:resources mapping="/images/**" location="/images/" />
-	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" 
+<!-- 	<mvc:resources mapping="/images/**" location="/images/" />
+ -->	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" 
 		/> <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> 
 		</bean> -->
 
