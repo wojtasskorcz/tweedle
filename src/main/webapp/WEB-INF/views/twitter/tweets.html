@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Hello Twitter</title>
-    </head>
-    <body>
-        <h3>Hello, <span th:text="${twitterProfile.name}">Some User</span>!</h3>
-       
-        <h4>These are your tweets:</h4>
-        <ul>
-            <li th:each="tweet:${tweets}" th:text="${tweet.text}">Tweet</li>
-        </ul>
-    </body>
+<head>
+<meta th:replace="partials/head-content"></meta>
+<title>Tweets</title>
+</head>
+<body>
+	<h3>
+		Hello, <span th:text="${twitterProfile.name}">Some User</span>!
+	</h3>
+
+	<h4>These are your tweets:</h4>
+	<div>
+		<div th:each="tweet:${tweets}" th:include="twitter/partials/tweet"
+			th:with="tweetAuthor=${tweet.fromUser}, tweetCreatedAt=${tweet.createdAt}, tweetText=${tweet.text}"
+			th:remove="tag">Tweet</div>
+	</div>
+
+	<div th:replace="partials/js-scripts">Scripts</div>
+</body>
 </html>

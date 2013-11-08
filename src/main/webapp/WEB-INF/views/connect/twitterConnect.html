@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Hello Twitter</title>
-    </head>
+<head>
+<meta th:replace="partials/head-content"></meta>
+<title>Twitter Connect</title>
+</head>
     <body>
         <h3>Connect to Twitter</h3>
 
@@ -12,5 +13,6 @@
             </div>
             <p><button type="submit">Connect to Twitter</button></p>
         </form>
-    </body>
+	<div th:replace="partials/js-scripts">Scripts</div>
+</body>
 </html>

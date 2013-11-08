@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>title</title>
+<meta th:replace="partials/head-content"></meta>
+<title>Welcome</title>
 </head>
 <body>
-Welcome!
+	Welcome!
+
+	<div th:replace="partials/js-scripts">Scripts</div>
 </body>
 </html>

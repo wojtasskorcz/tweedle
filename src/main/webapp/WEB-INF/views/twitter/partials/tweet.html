@@ -1,0 +1,5 @@
+<div>
+	<h1 th:text="${tweetAuthor}">Tweet Author</h1>
+	<h2 th:text="${#dates.format(tweetCreatedAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</h2>
+	<p th:text="${tweetText}">Tweet text</p>
+</div>
