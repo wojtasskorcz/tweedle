@@ -9,6 +9,8 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.twitter.config.annotation.EnableTwitter;
 
+import agh.sr.tweedle.controller.CustomConnectController;
+
 @Configuration
 @EnableTwitter(appId="tM9168yNESE2wDb06nZOGw", appSecret="rFtCY3e6hSMAGY6YegJPooILdld21gQEl8zTi4")
 @EnableInMemoryConnectionRepository
@@ -26,7 +28,7 @@ public class TwitterConfig {
 
     @Bean
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
-        return new ConnectController(connectionFactoryLocator, connectionRepository);
+        return new CustomConnectController(connectionFactoryLocator, connectionRepository);
     }
 
 }
