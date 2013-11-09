@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
@@ -23,25 +23,18 @@ public class TweetsController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TweetsController.class);
 
-	
+	@Autowired
     private Twitter twitter;
+	
+	@Autowired
     private ConnectionRepository connectionRepository;
+	
+	@Autowired
     private SessionBean sessionBean;
-
-    @Inject
-    public TweetsController(Twitter twitter, ConnectionRepository connectionRepository, SessionBean sessionBean) {
-        this.twitter = twitter;     
-        this.connectionRepository = connectionRepository;
-        this.sessionBean = sessionBean;
-    }
     
     @RequestMapping("/")
 	public String index(Model model) {
     	model.addAttribute("sessionBean", sessionBean);
-    	if (sessionBean.getSecurityPrincipal() == null){ //TODO: extract this to some spring security after login hook
-    		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    		sessionBean.setSecurityPrincipal(principal);
-    	}
     	
     	if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
     		return "index";

@@ -9,6 +9,13 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- for LocalAuthenticationSuccessHandler to have access to session-scoped beans -->
+	<listener>
+  		<listener-class>
+      		org.springframework.web.context.request.RequestContextListener
+  		</listener-class>
+	</listener>
 
 	<servlet>
 		<servlet-name>mainServlet</servlet-name>

@@ -7,7 +7,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Component;
 
-@Component(value="sessionBean") @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
+@Component(value="sessionBean") 
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 public class SessionBean implements Serializable {
 	private TwitterProfile twitterProfile;
 	private Object securityPrincipal;

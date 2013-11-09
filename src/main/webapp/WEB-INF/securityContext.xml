@@ -8,9 +8,11 @@
 	<http use-expressions="true">
 		<intercept-url pattern="/followed" access="hasRole('admin')" />
 		<intercept-url pattern="/**" access="hasRole('user')" />
-		<form-login />
+		<form-login authentication-success-handler-ref="localAuthenticationSuccessHandler"/>
 		<logout logout-success-url="/" />
 	</http>
+	
+	<!-- <beans:bean id="localAuthenticationSuccessHandler" class="agh.sr.tweedle.security.LocalAuthenticationSuccessHandler"/> -->
 	
 	<!-- database authentication with groups -->
 	<!-- <beans:bean id="jdbcDaoImpl" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">

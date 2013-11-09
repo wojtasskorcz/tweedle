@@ -1,14 +1,12 @@
 package agh.sr.tweedle.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.twitter.api.CursoredList;
-import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Controller;
@@ -25,17 +23,14 @@ public class FollowedController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FollowedController.class);
 
-	
+	@Autowired
     private Twitter twitter;
+	
+	@Autowired
     private ConnectionRepository connectionRepository;
+	
+	@Autowired
     private SessionBean sessionBean;
-    
-    @Inject
-    public FollowedController(Twitter twitter, ConnectionRepository connectionRepository, SessionBean sessionBean) {
-        this.twitter = twitter;     
-        this.connectionRepository = connectionRepository;
-        this.sessionBean = sessionBean;
-    }
 
     @RequestMapping(method=RequestMethod.GET)
     public String helloTwitter(Model model) {
