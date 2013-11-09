@@ -9,6 +9,7 @@
 		<intercept-url pattern="/followed" access="hasRole('admin')" />
 		<intercept-url pattern="/**" access="hasRole('user')" />
 		<form-login />
+		<logout logout-success-url="/" />
 	</http>
 	
 	<!-- database authentication with groups -->
