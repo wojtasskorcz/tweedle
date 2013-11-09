@@ -15,11 +15,11 @@ public class CustomConnectController extends ConnectController {
     
     @Override
     protected String connectedView(String providerId){
-    	return "redirect:/index";
+    	return "redirect:/";
     }
     
     @Override
     protected String connectView(String providerId){
-    	return "redirect:/index";
+    	return "redirect:/";
     }
 }

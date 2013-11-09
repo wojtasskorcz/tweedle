@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/twitter/followed")
-public class TwitterFollowedController {
+@RequestMapping("/followed")
+public class FollowedController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(TwitterFollowedController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FollowedController.class);
 
 	
     private Twitter twitter;
     private ConnectionRepository connectionRepository;
 
     @Inject
-    public TwitterFollowedController(Twitter twitter, ConnectionRepository connectionRepository) {
+    public FollowedController(Twitter twitter, ConnectionRepository connectionRepository) {
         this.twitter = twitter;     
         this.connectionRepository = connectionRepository;
     }
