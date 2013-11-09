@@ -5,17 +5,20 @@
 <title>Tweets</title>
 </head>
 <body>
-	<h3>
-		Hello, <span th:text="${twitterProfile.name}">Some User</span>!
-	</h3>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="row-fluid span12">
+				<h3>
+					Hello, <span th:text="${twitterProfile.name}">Some User</span>!
+				</h3>
+				<h4>These are your tweets:</h4>
+			</div>
+			<div th:each="tweet:${tweets}" th:include="twitter/partials/tweet"
+				th:with="tweetAuthor=${tweet.fromUser}, tweetCreatedAt=${tweet.createdAt}, tweetText=${tweet.text}"
+				th:remove="tag">Tweet</div>
 
-	<h4>These are your tweets:</h4>
-	<div>
-		<div th:each="tweet:${tweets}" th:include="twitter/partials/tweet"
-			th:with="tweetAuthor=${tweet.fromUser}, tweetCreatedAt=${tweet.createdAt}, tweetText=${tweet.text}"
-			th:remove="tag">Tweet</div>
+		</div>
 	</div>
-
 	<div th:replace="partials/js-scripts">Scripts</div>
 </body>
 </html>
