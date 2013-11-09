@@ -6,7 +6,7 @@
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http use-expressions="true">
-		<intercept-url pattern="/welcome.html" access="hasRole('supervisor')" />
+		<intercept-url pattern="/welcome.html" access="hasRole('admin')" />
 		<intercept-url pattern="/**" access="hasRole('user')" />
 		<form-login />
 	</http>
@@ -14,7 +14,7 @@
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="admin" password="admin" authorities="supervisor, user" />
+				<user name="admin" password="admin" authorities="admin, user" />
 				<user name="user" password="user" authorities="user" />
 			</user-service>
 		</authentication-provider>
