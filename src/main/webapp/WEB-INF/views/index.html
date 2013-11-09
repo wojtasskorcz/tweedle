@@ -5,7 +5,7 @@
 <title>Index</title>
 </head>
 <body>
-
+	<div th:replace="partials/navigation-bar">Navigation bar</div>
 	<!-- <form action="#" th:object="${credentials}" th:action="@{/doLogin}" method="post">
 		<fieldset>
 			<div>
@@ -21,11 +21,7 @@
 
 		</fieldset>
 	</form> -->
-
-	<a th:href="@{/welcome.html}">go to admin panel</a>
-	<br />
-	<a th:href="@{/connect/twitter}">go to twitter connection</a>
-
+	<h1>It's The Index man. It doesn't do nothin'.</h1>
 	<div th:replace="partials/js-scripts">Scripts</div>
 </body>
 </html>
