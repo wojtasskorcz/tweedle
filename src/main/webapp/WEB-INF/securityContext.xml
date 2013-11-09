@@ -6,17 +6,38 @@
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http use-expressions="true">
-		<intercept-url pattern="/welcome.html" access="hasRole('admin')" />
+		<intercept-url pattern="/followed" access="hasRole('admin')" />
 		<intercept-url pattern="/**" access="hasRole('user')" />
 		<form-login />
 	</http>
-
+	
+	<!-- database authentication with groups -->
+	<!-- <beans:bean id="jdbcDaoImpl" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+	    <beans:property name="enableGroups" value="true" />
+	    <beans:property name="enableAuthorities" value="false" />
+	    <beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>	
 	<authentication-manager>
+		<authentication-provider user-service-ref="jdbcDaoImpl">
+			<password-encoder hash="plaintext" />
+		</authentication-provider>
+	</authentication-manager> -->
+
+	<!-- database authentication without groups -->
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource" />
+			<password-encoder hash="plaintext" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- hard-coded authentication -->
+	<!-- <authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="admin" password="admin" authorities="admin, user" />
 				<user name="user" password="user" authorities="user" />
 			</user-service>
 		</authentication-provider>
-	</authentication-manager>
+	</authentication-manager> -->
 </beans:beans>   
