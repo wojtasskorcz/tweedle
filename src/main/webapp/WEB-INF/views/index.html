@@ -5,7 +5,7 @@
 <title>Index</title>
 </head>
 <body>
-	<div th:replace="partials/navigation-bar">Navigation bar</div>
+	<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<h3>Connect to Twitter</h3>
