@@ -1,12 +1,12 @@
 <div class="row-fluid span6 offset3">
 	<div class="thumbnail">
 		<div class="row-fluid">
-		  <span class="span6" th:text="${tweetAuthor}">Tweet Author</span>
-          <span class="span6 text-right" th:text="${#dates.format(tweetCreatedAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</span>
+		  <span class="span6"><strong th:text="${tweet.fromUser}">Tweet Author</strong></span>
+          <span class="span6 text-right" th:text="${#dates.format(tweet.createdAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</span>
 		</div>
 		<hr/>
 		<div class="row-fluid">
-			<p th:text="${tweetText}">Tweet text</p>
+			<p th:text="${tweet.text}">Tweet text</p>
 		</div>
 	</div>
 </div>
