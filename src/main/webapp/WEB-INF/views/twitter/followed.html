@@ -5,7 +5,7 @@
 <title>Followed</title>
 </head>
 <body>
-<div th:replace="partials/navigation-bar">Navigation bar</div>
+<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
 	<h3>
 		Hello, <span th:text="${sessionBean.twitterProfile.name}">Some User</span>!
 	</h3>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import agh.sr.tweedle.model.SessionBean;
+import agh.sr.tweedle.util.TwitterConnectionUtils;
 
 
 @Controller
@@ -27,20 +28,22 @@ public class FollowedController {
     private Twitter twitter;
 	
 	@Autowired
-    private ConnectionRepository connectionRepository;
+    private TwitterConnectionUtils twitterConnectionUtils;
 	
 	@Autowired
     private SessionBean sessionBean;
 
     @RequestMapping(method=RequestMethod.GET)
     public String helloTwitter(Model model) {
-        if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
-            return "redirect:/connect/twitter";
-        }
         model.addAttribute("sessionBean", sessionBean);
+    	
+        if (!twitterConnectionUtils.isConnectedToTwitter()) {
+    		return "redirect:/connect/twitter";
+        }	
+    	
         CursoredList<TwitterProfile> friends = twitter.friendOperations().getFriends();
-        
         model.addAttribute("friends", friends);
+        
         return "twitter/followed";
     }
 }

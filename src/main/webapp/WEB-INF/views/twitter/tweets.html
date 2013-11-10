@@ -5,10 +5,15 @@
 <title>Tweets</title>
 </head>
 <body>
-<div th:replace="partials/navigation-bar">Navigation bar</div>
+<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="row-fluid span12">
+			<form th:action="@{/twitter-logout}" method="GET">
+				<p>
+					<button type="submit">Disconnect from Twitter</button>
+				</p>
+			</form>
 				<h3>
 					Hello, <span th:text="${sessionBean.twitterProfile.name}">Some User</span>!
 				</h3>
