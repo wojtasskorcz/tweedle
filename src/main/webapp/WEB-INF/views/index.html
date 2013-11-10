@@ -6,22 +6,36 @@
 </head>
 <body>
 	<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
+	<div th:if="${#objects.nullSafe(exception, false)}" th:include="partials/exceptions-bar" th:with="errorMessage=${exception}" th:remove="tag">Exceptions bar</div>
+	
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h3>Connect to Twitter</h3>
-
-			<form th:action="@{/connect/twitter}" method="POST">
-				<div class="formInfo">
-					<p>You aren't connected to Twitter yet. Click the button to
-						connect Tweedle with your Twitter account.</p>
-				</div>
-				<p>
-					<button type="submit">Connect to Twitter</button>
-				</p>
-			</form>
+			<div class="span8 offset2">
+			<h3>Welcome to Tweedle!</h3>
+			<p>
+				Tweedle is a simple showcase application written in Spring Stack and Thymeleaf for TAI classes. 
+			</p>
+			</div>
+		</div>
+		<div th:if="${sessionBean.twitterProfile == null}" class="row-fluid">
+			<div class="span8 offset2">
+				<h3>Connect to Twitter</h3>
+				<form th:action="@{/connect/twitter}" method="POST">
+					<div class="formInfo">
+						<p>
+							This page is displayed because you are not logged in your twitter account yet.
+						</p>
+						<p>
+							Click the button to connect Tweedle with your Twitter account.
+						</p>
+					</div>
+					<p>
+						<button type="submit">Connect to Twitter</button>
+					</p>
+				</form>
+			</div>
 		</div>
 	</div>
-	<h1>It's The Index man. It doesn't do nothin'.</h1>
 	<div th:replace="partials/js-scripts">Scripts</div>
 </body>
 </html>

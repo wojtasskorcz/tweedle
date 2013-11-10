@@ -5,7 +5,8 @@
 <title>Followed</title>
 </head>
 <body>
-<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
+	<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
+	<div th:if="${#objects.nullSafe(exception, false)}" th:include="partials/exceptions-bar" th:with="errorMessage=${exception}" th:remove="tag">Exceptions bar</div>
 	
 	<div class="container-fluid">
 		<div sec:authorize="hasRole('admin')" class="row-fluid">
