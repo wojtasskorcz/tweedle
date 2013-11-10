@@ -13,9 +13,9 @@
 					<li><a href="#friends" th:href="@{/followed}">Followed</a></li>
 					<li><a href="#options">Options</a></li>
 				</ul>
-				<ul th:if="${sessionBean.securityPrincipal != null}" class="nav pull-right">
+				<ul sec:authorize="isAuthenticated()" class="nav pull-right">
 					<li>
-						<p class="nav navbar-text" th:text="'Login: ' + ${sessionBean.securityPrincipal.username}">Login</p>
+						<p class="nav navbar-text" th:text="'Login: ' + ${#authentication.name}">Login</p>
 					</li>
 					<li th:if="${sessionBean.twitterProfile != null}">
 						<p class="nav navbar-text" th:text="'Twitter Profile: ' + ${sessionBean.twitterProfile.screenName}">Twitter profile</p>

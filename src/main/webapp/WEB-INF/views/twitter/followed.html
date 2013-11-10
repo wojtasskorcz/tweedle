@@ -8,7 +8,7 @@
 <div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
 	
 	<div class="container-fluid">
-		<div class="row-fluid">
+		<div sec:authorize="hasRole('admin')" class="row-fluid">
 			<div class="span8 offset2 text-center">
 			    <form class="form-inline">
 					<label class="text">
@@ -27,7 +27,7 @@
 							<th class="span2">Full name</th>
 							<th class="span6">Description</th>
 							<th class="span2">Profile URL</th>
-							<th class="span1"></th>
+							<th sec:authorize="hasRole('admin')" class="span1"></th>
 						</tr>
 					</thead>
 					<tbody>

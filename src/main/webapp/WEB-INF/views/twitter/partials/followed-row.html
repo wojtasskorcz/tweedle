@@ -3,5 +3,5 @@
 	<td th:text="${friend.name}">Full Name</td>
 	<td th:text="${friend.description}">Description</td>
 	<td th:text="${friend.url}">Profile URL</td>
-	<td><button class="btn btn-block btn-danger remove-friend" type="button">Remove</button></td>
+	<td sec:authorize="hasRole('admin')"><button class="btn btn-block btn-danger remove-friend" type="button">Remove</button></td>
 </tr>
