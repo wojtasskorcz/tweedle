@@ -7,13 +7,14 @@
 			$.ajax({
 				type: 'DELETE',
 			    url: [[@{/connect/twitter}]]
+			}).always(function(){
+				location.reload();
 			})			
 		});
 	}
            
 	$(document).ready(function(){
 		attachTwitterLogoutActionToButton();
-		console.log("THIS DOCUMENT LOADED JUST FINE");	
 	});
 /*]]>*/
 </script>
