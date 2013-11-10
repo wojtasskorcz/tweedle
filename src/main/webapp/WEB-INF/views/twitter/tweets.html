@@ -8,11 +8,11 @@
 <div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div></div>
-			<div th:each="tweet:${tweets}" th:include="twitter/partials/tweet"
-				th:with="tweet=${tweet}"
-				th:remove="tag">Tweet</div>
-
+			<div class="span8 offset2">
+				<div th:each="tweet:${tweets}" th:include="twitter/partials/tweet"
+					th:with="tweet=${tweet}"
+					th:remove="tag">Tweet</div>
+			</div>
 		</div>
 	</div>
 	<div th:replace="partials/js-scripts">Scripts</div>

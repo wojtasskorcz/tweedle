@@ -34,15 +34,15 @@ public class FollowedController {
     private SessionBean sessionBean;
 
     @RequestMapping(method=RequestMethod.GET)
-    public String helloTwitter(Model model) {
+    public String getFollowed(Model model) {
         model.addAttribute("sessionBean", sessionBean);
     	
         if (!twitterConnectionUtils.isConnectedToTwitter()) {
     		return "redirect:/connect/twitter";
         }	
     	
-        CursoredList<TwitterProfile> friends = twitter.friendOperations().getFriends();
-        model.addAttribute("friends", friends);
+        CursoredList<TwitterProfile> followed = twitter.friendOperations().getFriends();
+        model.addAttribute("followed", followed);
         
         return "twitter/followed";
     }

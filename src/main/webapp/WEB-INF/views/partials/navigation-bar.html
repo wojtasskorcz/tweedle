@@ -9,6 +9,7 @@
 			<a class="brand" href="#" th:href="@{/}">Tweedle</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
+					<li><a href="#friends" th:href="@{/}">Tweets</a></li>
 					<li><a href="#friends" th:href="@{/followed}">Followed</a></li>
 					<li><a href="#options">Options</a></li>
 				</ul>
@@ -17,7 +18,7 @@
 						<p class="nav navbar-text" th:text="'Login: ' + ${sessionBean.securityPrincipal.username}">Login</p>
 					</li>
 					<li th:if="${sessionBean.twitterProfile != null}">
-						<p class="nav navbar-text" th:text="'Twitter Profile: ' + ${sessionBean.twitterProfile.name}">Twitter profile</p>
+						<p class="nav navbar-text" th:text="'Twitter Profile: ' + ${sessionBean.twitterProfile.screenName}">Twitter profile</p>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"><i class="icon-chevron-down icon-white"></i></a>
