@@ -25,6 +25,7 @@ public class TwitterConnectionUtils {
     		return false;
         }
     	else{
+    		sessionBean.setTwitterProfile(connectionRepository.findPrimaryConnection(Twitter.class).getApi().userOperations().getUserProfile());
     		return true;
     	}
 	}
