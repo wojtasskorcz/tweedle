@@ -25,7 +25,7 @@
 						<tr>
 							<th class="span1">Screen name</th>
 							<th class="span2">Full name</th>
-							<th class="span6">Description</th>
+							<th class="span6" th:class="${#authorization.expression('hasRole(''admin'')')}? 'span6' : 'span7'">Description</th>
 							<th class="span2">Profile URL</th>
 							<th sec:authorize="hasRole('admin')" class="span1"></th>
 						</tr>
