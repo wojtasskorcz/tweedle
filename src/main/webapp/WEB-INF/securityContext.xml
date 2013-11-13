@@ -7,10 +7,11 @@
 
 	<http use-expressions="true">
 		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/login-error" access="permitAll"/>
 		<intercept-url pattern="/followed" access="hasRole('user')" />
 		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/**" access="hasRole('user')" />
-		<form-login login-page="/login"/>
+		<form-login login-page="/login" authentication-failure-url="/login-error"/>
 		<logout logout-success-url="/" />
 	</http>
 	
