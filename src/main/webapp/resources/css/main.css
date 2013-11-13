@@ -23,3 +23,12 @@ hr {
 .navbar-inverse .navbar-text {
 	color: #FFF;
 }
+
+.login-box {
+	background-color: white;
+}
+
+.login-box hr {
+	margin: 5px;
+	margin-bottom: 20px;
+}
