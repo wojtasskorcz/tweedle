@@ -3,8 +3,10 @@ package agh.sr.tweedle.twitter.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.UserIdSource;
-import org.springframework.social.config.annotation.EnableInMemoryConnectionRepository;
+import org.springframework.social.config.annotation.EnableJdbcConnectionRepository;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
@@ -15,11 +17,11 @@ import agh.sr.tweedle.util.TwitterConnectInterceptor;
 
 @Configuration
 @EnableTwitter(appId="tM9168yNESE2wDb06nZOGw", appSecret="rFtCY3e6hSMAGY6YegJPooILdld21gQEl8zTi4")
-@EnableInMemoryConnectionRepository
+@EnableJdbcConnectionRepository
 public class TwitterConfig {
-	
-	@Autowired
-	private TwitterConnectInterceptor twitterConnectInterceptor;
+        
+    @Autowired
+    private TwitterConnectInterceptor twitterConnectInterceptor;
 
     @Bean
     public UserIdSource userIdSource() {
@@ -35,7 +37,12 @@ public class TwitterConfig {
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
         CustomConnectController connectionController = new CustomConnectController(connectionFactoryLocator, connectionRepository);
         connectionController.addInterceptor(twitterConnectInterceptor);
-    	return connectionController;
+        return connectionController;
+    }
+    
+    @Bean
+    public TextEncryptor textEncryptor() {
+        return Encryptors.noOpText();
     }
 
 }

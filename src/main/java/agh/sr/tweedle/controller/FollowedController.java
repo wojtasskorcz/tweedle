@@ -1,11 +1,9 @@
 package agh.sr.tweedle.controller;
 
-import javax.inject.Inject;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.twitter.api.CursoredList;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.TwitterProfile;
@@ -22,7 +20,7 @@ import agh.sr.tweedle.util.TwitterConnectionUtils;
 @RequestMapping("/followed")
 public class FollowedController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(FollowedController.class);
+	private static final Logger logger = Logger.getLogger(FollowedController.class.getName());
 
 	@Autowired
     private Twitter twitter;
@@ -37,7 +35,6 @@ public class FollowedController {
     public String getFollowed(Model model) {
         model.addAttribute("sessionBean", sessionBean);
         CursoredList<TwitterProfile> followed = null;
-        
         try{
             if (!twitterConnectionUtils.isConnectedToTwitter()) {
         		return "redirect:/connect/twitter";

@@ -2,9 +2,9 @@ package agh.sr.tweedle.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
@@ -19,8 +19,7 @@ import agh.sr.tweedle.util.TwitterConnectionUtils;
 @RequestMapping("/")
 public class TweetsController {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(TweetsController.class);
+	private static final Logger logger = Logger.getLogger(TweetsController.class.getName());
 
 	@Autowired
 	private Twitter twitter;
@@ -33,6 +32,7 @@ public class TweetsController {
 
 	@RequestMapping("/")
 	public String index(Model model) {
+		logger.warning("index");
 		model.addAttribute("sessionBean", sessionBean);
 		List<Tweet> tweets = new ArrayList<Tweet>();
 
@@ -42,6 +42,7 @@ public class TweetsController {
 			}
 			tweets.addAll(twitter.timelineOperations().getHomeTimeline());
 		} catch (Exception e) {
+			logger.warning(ExceptionUtils.getStackTrace(e));
 			model.addAttribute("exception", e.toString());
 			return "index";
 		}
