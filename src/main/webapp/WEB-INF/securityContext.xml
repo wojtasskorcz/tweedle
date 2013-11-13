@@ -6,9 +6,11 @@
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http use-expressions="true">
+		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/followed" access="hasRole('user')" />
+		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/**" access="hasRole('user')" />
-		<form-login/>
+		<form-login login-page="/login"/>
 		<logout logout-success-url="/" />
 	</http>
 	
