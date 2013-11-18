@@ -43,7 +43,7 @@ public class LocalAuthenticationSuccessHandler extends
         	user = new User(login);
         	sessionFactory.getCurrentSession().persist(user); // immediately gets attached, tested
         }
-        logger.warning("user = " + user);
+        sessionBean.setUser(user);
         
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
