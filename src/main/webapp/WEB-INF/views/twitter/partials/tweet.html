@@ -1,9 +1,17 @@
-<div class="row-fluid">
+<div th:id="${tweet.id}" class="row-fluid tweet-row">
 	<div class="span12">
 		<div class="thumbnail tweet-box">
 			<div class="row-fluid">
+			  <span class="dropdown span1 text-center">
+              	<a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-chevron-down"></i></a>
+              	<ul class="dropdown-menu text-left">
+                	<li><a class="tweet-toggle-hidden" href="#">Hide</a></li>
+              	</ul>
+              </span>
 			  <span class="span6"><strong th:text="${tweet.fromUser}">Tweet Author</strong></span>
-	          <span class="span6 text-right" th:text="${#dates.format(tweet.createdAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</span>
+	          <span class="span5 text-right pull-right" th:text="${#dates.format(tweet.createdAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</span>
+
+	
 			</div>
 			<hr/>
 			<div class="row-fluid">

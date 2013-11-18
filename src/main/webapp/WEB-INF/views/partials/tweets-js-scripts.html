@@ -1,0 +1,17 @@
+<script th:inline="javascript">
+/*<![CDATA[*/
+	var toggleHidden = function(){
+		var id = $(this).closest('.tweet-row').attr('id');
+		alert(id);
+		//here goes json! (bedzie wieczorem/jutro)
+	}
+	
+	var attachTweetHideActionToButton = function(){
+		$('body').on('click', '.tweet-toggle-hidden', toggleHidden);
+	}
+	
+	$(document).ready(function(){
+		attachTweetHideActionToButton();
+	});
+/*]]>*/
+</script>
