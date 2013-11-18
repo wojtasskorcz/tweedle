@@ -1,3 +1,12 @@
+CREATE USER 'student'@'localhost' IDENTIFIED BY 'student';
+GRANT ALL PRIVILEGES ON *.* TO 'student'@'localhost' WITH GRANT OPTION;
+CREATE USER 'student'@'%' IDENTIFIED BY 'student';
+GRANT ALL PRIVILEGES ON *.* TO 'student'@'%' WITH GRANT OPTION;
+
+CREATE SCHEMA `tai` ;
+
+USE tai;
+
 create table users (
     username varchar(50) not null primary key,
     password varchar(50) not null,

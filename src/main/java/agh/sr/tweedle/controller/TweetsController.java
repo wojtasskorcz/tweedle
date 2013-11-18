@@ -32,7 +32,6 @@ public class TweetsController {
 
 	@RequestMapping("/")
 	public String index(Model model) {
-		logger.warning("index");
 		model.addAttribute("sessionBean", sessionBean);
 		List<Tweet> tweets = new ArrayList<Tweet>();
 
@@ -42,7 +41,6 @@ public class TweetsController {
 			}
 			tweets.addAll(twitter.timelineOperations().getHomeTimeline());
 		} catch (Exception e) {
-			logger.warning(ExceptionUtils.getStackTrace(e));
 			model.addAttribute("exception", e.toString());
 			return "index";
 		}
