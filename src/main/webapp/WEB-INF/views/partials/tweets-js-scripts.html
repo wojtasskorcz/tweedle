@@ -1,9 +1,32 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
+    var sendToggleHiddenJSON = function(id, hide){
+	
+		var data = {id: id, hidden: hide};		
+		$.ajax({
+			headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 				
+			},
+			'type': 'POST',
+		    'url': [[@{/toggleHidden}]],
+		    'data': JSON.stringify(data),
+		    'dataType': 'json'
+		})
+		.done(function(){
+			console.log("Success " + data);
+			if (hide){
+				$("#" + data.id).remove();	
+			}
+		})
+		.fail(function(jqXHR, textStatus){
+			alert("Request failed " + textStatus);
+		});
+	}       
+           
 	var toggleHidden = function(){
 		var id = $(this).closest('.tweet-row').attr('id');
-		alert(id);
-		//here goes json! (bedzie wieczorem/jutro)
+		sendToggleHiddenJSON(id, true);
 	}
 	
 	var attachTweetHideActionToButton = function(){

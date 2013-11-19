@@ -59,7 +59,7 @@ public class TweetsController {
 	@ResponseBody
 	public String toggleHidden(@RequestBody String json) {
 		logger.warning("received JSON: " + json);
-		long tweetId = JsonPath.with(json).getLong("id");
+		long tweetId = Long.parseLong(JsonPath.with(json).getString("id"));
 		boolean hidden = JsonPath.with(json).getBoolean("hidden");
 		logger.warning(String.format("parsed JSON: id=%s, hidden=%s", tweetId, hidden));
 		if (hidden) {
