@@ -15,7 +15,10 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="agh.sr.tweedle" />
+	<context:component-scan base-package="agh.sr.tweedle.dao" />
+	<context:component-scan base-package="agh.sr.tweedle.model" />
+	<context:component-scan base-package="agh.sr.tweedle.twitter.config" />
+	<context:component-scan base-package="agh.sr.tweedle.util" />
 
 	<!-- for hibernate -->
 

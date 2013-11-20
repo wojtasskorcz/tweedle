@@ -7,13 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import agh.sr.tweedle.dao.UserDao;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.model.User;
 
@@ -26,7 +26,7 @@ public class LocalAuthenticationSuccessHandler extends
 	private SessionBean sessionBean;
 	
 	@Autowired
-	private SessionFactory sessionFactory;
+	private UserDao userDao;
 
 	@Override
 	@Transactional
@@ -38,13 +38,12 @@ public class LocalAuthenticationSuccessHandler extends
             throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
         }
         String login = authentication.getName();
-        User user = (User) sessionFactory.getCurrentSession().get(User.class, login);
+        User user = userDao.getUser(login);
         if (user == null) {
         	user = new User(login);
-        	sessionFactory.getCurrentSession().persist(user); // immediately gets attached, tested
+        	userDao.persistUser(user);
         }
         sessionBean.setUser(user);
-        
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import agh.sr.tweedle.dao.UserDao;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.util.TwitterConnectionUtils;
 
@@ -33,6 +34,9 @@ public class TweetsController {
 
 	@Autowired
 	private SessionBean sessionBean;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@RequestMapping("/")
 	public String index(Model model) {
@@ -58,10 +62,10 @@ public class TweetsController {
 			produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String toggleHidden(@RequestBody String json) {
-		logger.warning("received JSON: " + json);
+//		logger.warning("received JSON: " + json);
 		long tweetId = Long.parseLong(JsonPath.with(json).getString("id"));
 		boolean hidden = JsonPath.with(json).getBoolean("hidden");
-		logger.warning(String.format("parsed JSON: id=%s, hidden=%s", tweetId, hidden));
+//		logger.warning(String.format("parsed JSON: id=%s, hidden=%s", tweetId, hidden));
 		if (hidden) {
 			boolean added = sessionBean.getUser().getReadTweetIds().add(tweetId);
 			if (!added) {
@@ -73,6 +77,7 @@ public class TweetsController {
 				return String.format("{\"exception\": \"Tweet %s was not hidden\"", tweetId);
 			}
 		}
+		userDao.update(sessionBean.getUser());
 		return "{\"exception\": \"\"}";
 	}
 }
