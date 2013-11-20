@@ -19,7 +19,7 @@ public class User implements Serializable {
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "ReadTweets")
-	private Set<Long> readTweetIds;
+	private Set<Long> hiddenTweetIds;
 	
 	private Long maxTweetAgeDays;
 	private Boolean showHidden;
@@ -29,7 +29,7 @@ public class User implements Serializable {
 	
 	public User(String login) {
 		this.login = login;
-		readTweetIds = new HashSet<>();
+		hiddenTweetIds = new HashSet<>();
 		maxTweetAgeDays = 3L;
 		showHidden = false;
 	}
@@ -42,12 +42,12 @@ public class User implements Serializable {
 		this.login = login;
 	}
 
-	public Set<Long> getReadTweetIds() {
-		return readTweetIds;
+	public Set<Long> getHiddenTweetIds() {
+		return hiddenTweetIds;
 	}
 
-	public void setReadTweetIds(Set<Long> readTweetIds) {
-		this.readTweetIds = readTweetIds;
+	public void setHiddenTweetIds(Set<Long> hiddenTweetIds) {
+		this.hiddenTweetIds = hiddenTweetIds;
 	}
 
 	public Long getMaxTweetAgeDays() {
