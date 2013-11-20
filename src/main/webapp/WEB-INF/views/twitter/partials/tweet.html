@@ -1,11 +1,11 @@
-<div th:id="${tweet.id}" class="row-fluid tweet-row">
+<div th:if="${tweet.hidden == false or sessionBean.user.showHidden}" th:id="${tweet.id}" class="row-fluid tweet-row" th:classappend="${tweet.hidden}? 'tweet-row-hidden muted'">
 	<div class="span12">
 		<div class="thumbnail tweet-box">
 			<div class="row-fluid">
 			  <span class="dropdown span1 text-center">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="icon-chevron-down"></i></a>
               	<ul class="dropdown-menu text-left">
-                	<li><a class="tweet-toggle-hidden" href="#">Hide</a></li>
+                	<li><a class="tweet-toggle-hidden" href="#" th:text="${tweet.hidden}? 'Show' : 'Hide'">Hide</a></li>
               	</ul>
               </span>
 			  <span class="span6"><strong th:text="${tweet.fromUser}">Tweet Author</strong></span>

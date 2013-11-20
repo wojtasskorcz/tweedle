@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta th:replace="partials/head-content"></meta>
+<title>Options</title>
+</head>
+<body>
+	<div th:replace="partials/navigation-bar" th:with="sessionBean=${sessionBean}">Navigation bar</div>
+	<div th:if="${#objects.nullSafe(exception, false)}" th:include="partials/exceptions-bar" th:with="errorMessage=${exception}" th:remove="tag">Exceptions bar</div>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span8 offset2">
+				<div>
+				    <form class="form-horizontal" th:action="@{/options}" th:object="${optionsForm}" method="POST">
+				    	<h2>Options</h2>
+				    	<hr/>
+				    	<div class="control-group" th:classappend="${#fields.hasErrors('maxTweetAgeDays')}? 'error'">
+				    		<label class="control-label" for="max-tweet-age-days-input">Max tweet age (in days):</label>
+				    		<div class="controls">
+				    			<input class="text-right" type="number" id="max-tweet-age-days-input" name="max-tweet-age-days-input" placeholder="0" th:field="*{maxTweetAgeDays}"/>
+				    			<span class="help-inline" th:if="${#fields.hasErrors('maxTweetAgeDays')}" th:errors="*{maxTweetAgeDays}">Invalid tweet age in days</span>
+				    		</div>
+				    	</div>
+				    	<div class="control-group">
+				    		<label class="control-label" for="show-hidden-checkbox">Show hidden tweets:</label>
+				    		<div class="controls">
+				    			<input type="checkbox" id="show-hidden-checkbox" name="show-hidden-checkbox" th:field="*{showHidden}"/>
+				    		</div>
+				    	</div>
+				    	<div class="control-group text-right">
+				    		<div class="controls">
+				    			<button type="submit" class="btn">Submit</button>
+				    		</div>
+				    	</div>
+				    </form>
+			    </div>			
+			</div>
+		</div>
+	</div>
+	<div th:replace="partials/js-scripts">Scripts</div>
+</body>
+</html>

@@ -9,9 +9,9 @@
 			<a class="brand" href="#" th:href="@{/}">Tweedle</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li><a href="#friends" th:href="@{/}">Tweets</a></li>
+					<li><a href="#tweets" th:href="@{/}">Tweets</a></li>
 					<li><a href="#friends" th:href="@{/followed}">Followed</a></li>
-					<li><a href="#options">Options</a></li>
+					<li><a href="#options" th:href="@{/options}">Options</a></li>
 				</ul>
 				<ul sec:authorize="isAuthenticated()" class="nav pull-right">
 					<li>
