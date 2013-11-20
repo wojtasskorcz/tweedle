@@ -18,6 +18,10 @@
 			if (hide){
 				$("#" + data.id).remove();	
 			}
+			else {
+				$("#" + data.id).removeClass('muted').removeClass('tweet-row-hidden');
+				$("#" + data.id).find('.tweet-toggle-hidden').text('Hide');
+			}
 		})
 		.fail(function(jqXHR, textStatus){
 			alert("Request failed " + textStatus);
@@ -26,7 +30,8 @@
            
 	var toggleHidden = function(){
 		var id = $(this).closest('.tweet-row').attr('id');
-		sendToggleHiddenJSON(id, true);
+		var hide = !$('#' + id).hasClass('tweet-row-hidden');
+		sendToggleHiddenJSON(id, hide);
 	}
 	
 	var attachTweetHideActionToButton = function(){
