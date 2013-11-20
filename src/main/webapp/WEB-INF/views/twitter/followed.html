@@ -11,11 +11,12 @@
 	<div class="container-fluid">
 		<div sec:authorize="hasRole('admin')" class="row-fluid">
 			<div class="span8 offset2 text-center">
-			    <form class="form-inline">
+			    <form action="#" th:action="@{/followed}" th:object="${followedForm}" method="POST" class="form-inline">
 					<label class="text">
-						Add to followed: <input type="text" class="input-large" placeholder="Screen Name"/>
+						Add to followed: <input type="text" id="input-screen-name" class="input-large" placeholder="Screen Name" th:field="*{screenName}" />
 					</label>
-					<button type="submit" class="btn">Add</button>
+					<button type="submit" id="submit-screen-name" class="btn" disabled="true">Add</button>
+					<p class="text-error" th:if="${#fields.hasErrors('screenName')}" th:errors="*{screenName}">Validation error</p>
 			    </form>
 		    </div>
 		</div>
@@ -42,5 +43,6 @@
 	</div>
 
 	<div th:replace="partials/js-scripts">Scripts</div>
+	<div th:replace="partials/followed-js-scripts">Tweets Scripts</div>
 </body>
 </html>

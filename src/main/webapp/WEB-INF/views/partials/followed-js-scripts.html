@@ -1,0 +1,55 @@
+<script th:inline="javascript">
+/*<![CDATA[*/
+           
+    var sendRemoveFollowedJSON = function(id){
+		$.ajax({
+			headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 				
+			},
+			'type': 'DELETE',
+		    'url': [[@{/followed}]] + '/' + id
+		})
+		.done(function(data){
+			if (data.hasOwnProperty('ok')){
+				$("#" + id).remove();	
+			}
+			else{
+				alert("Exception occurred " + data.exception);				
+			}
+		})
+		.fail(function(jqXHR, textStatus){
+			alert("Request failed " + textStatus);
+		});	
+	}
+	
+    var removeFollowed = function(){
+		var id = $(this).closest('.followed-row').attr('id');
+		sendRemoveFollowedJSON(id);
+	}
+	
+	var attachFollowedRemoveActionToButtons = function(){
+		$('body').on('click', '.remove-friend-button', removeFollowed);
+	}
+	
+	var attachFormValidator = function(){
+		$('#input-screen-name').keyup(function() {
+			var empty = false;
+			if ($(this).val().length == 0) {
+				empty = true;
+			}
+		
+			if (empty) {
+				$('#submit-screen-name').attr('disabled', 'disabled');
+			} else {
+				$('#submit-screen-name').removeAttr('disabled');
+			}
+		});		
+	}
+           
+	$(document).ready(function(){
+		attachFormValidator();
+		attachFollowedRemoveActionToButtons();
+	});
+/*]]>*/
+</script>

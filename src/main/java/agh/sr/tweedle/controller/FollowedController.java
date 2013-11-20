@@ -1,19 +1,30 @@
 package agh.sr.tweedle.controller;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.CursoredList;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import agh.sr.tweedle.model.FollowUserForm;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.util.TwitterConnectionUtils;
+import agh.sr.tweedle.validation.FollowUserFormValidator;
 
 
 @Controller
@@ -21,15 +32,23 @@ import agh.sr.tweedle.util.TwitterConnectionUtils;
 public class FollowedController {
 	
 	private static final Logger logger = Logger.getLogger(FollowedController.class.getName());
-
+	
 	@Autowired
     private Twitter twitter;
+	
+	@Autowired
+	private FollowUserFormValidator followUserFormValidator;
 	
 	@Autowired
     private TwitterConnectionUtils twitterConnectionUtils;
 	
 	@Autowired
     private SessionBean sessionBean;
+	
+    @ModelAttribute("followedForm")
+    public FollowUserForm newFollowedForm() {
+        return new FollowUserForm();
+    }
 
     @RequestMapping(method=RequestMethod.GET)
     public String getFollowed(Model model) {
@@ -48,5 +67,42 @@ public class FollowedController {
     
         model.addAttribute("followed", followed);      
         return "twitter/followed";
+    }
+    
+	@InitBinder("followedForm")
+	private void initBinder(WebDataBinder binder){
+		binder.setValidator(followUserFormValidator);
+	}
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public String addFollowed(@Valid @ModelAttribute("followedForm") FollowUserForm followedForm, BindingResult result, final RedirectAttributes redirectAttributes){
+    	if (result.hasErrors()){
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.followedForm", result);
+    	    redirectAttributes.addFlashAttribute("followedForm", followedForm);
+    		return "redirect:/followed";
+    	}
+    	
+    	try{
+        	twitter.friendOperations().follow(followedForm.getScreenName());   		
+    	}
+        catch (Exception e){
+    	    redirectAttributes.addFlashAttribute("exception",  e.toString());
+			return "redirect:/followed";
+        }
+    	return "redirect:/followed";
+    }
+    
+    @RequestMapping(value= "/{id}", method = RequestMethod.DELETE, produces="application/json; charset=utf-8")
+    @ResponseBody
+    public String removeFollowed(@PathVariable("id") String userId){
+    	Long id = Long.parseLong(userId);
+    	try{
+        	twitter.friendOperations().unfollow(id);  		
+    	}
+        catch (Exception e){
+        	return String.format("{\"exception\": \"Remove user %ld failed\"}", id);
+        }
+		
+    	return "{\"ok\": \"true\"}";   	
     }
 }
