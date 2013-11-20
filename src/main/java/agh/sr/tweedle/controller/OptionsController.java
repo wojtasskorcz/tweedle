@@ -57,15 +57,13 @@ public class OptionsController {
     	}
     	sessionBean.getUser().setShowHidden(optionsForm.isShowHidden());
     	sessionBean.getUser().setMaxTweetAgeDays(optionsForm.getMaxTweetAgeDays());
-    	logger.warning("user = " + sessionBean.getUser());
-		userDao.update(sessionBean.getUser());
-//    	try {
-//    		userDao.update(sessionBean.getUser());
-//    	} catch (Exception e){
-//    		logger.severe(ExceptionUtils.getStackTrace(e));
-//    	    redirectAttributes.addFlashAttribute("exception",  e.toString());
-//			return "redirect:/options";	
-//    	}
+    	try {
+    		userDao.update(sessionBean.getUser());
+    	} catch (Exception e){
+    		logger.severe(ExceptionUtils.getStackTrace(e));
+    	    redirectAttributes.addFlashAttribute("exception",  e.toString());
+			return "redirect:/options";	
+    	}
     	return "redirect:/options";
     }
 }
