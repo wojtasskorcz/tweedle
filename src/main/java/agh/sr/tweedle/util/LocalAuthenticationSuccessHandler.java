@@ -29,7 +29,6 @@ public class LocalAuthenticationSuccessHandler extends
 	private UserDao userDao;
 
 	@Override
-	@Transactional
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {

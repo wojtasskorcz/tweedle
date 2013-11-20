@@ -15,7 +15,8 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="agh.sr.tweedle" />
+	<context:component-scan base-package="agh.sr.tweedle.controller" />
+	<context:component-scan base-package="agh.sr.tweedle.validation" />
 
 	<mvc:annotation-driven />
 

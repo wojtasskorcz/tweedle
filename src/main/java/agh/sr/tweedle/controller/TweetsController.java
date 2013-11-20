@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
@@ -89,7 +90,11 @@ public class TweetsController {
 				return String.format("{\"exception\": \"Tweet %s was not hidden\"", tweetId);
 			}
 		}
-		userDao.update(sessionBean.getUser());
+		try {
+			userDao.merge(sessionBean.getUser());
+		} catch (Exception e) {
+			logger.severe(ExceptionUtils.getStackTrace(e));
+		}
 		return "{\"exception\": \"\"}";
 	}
 }

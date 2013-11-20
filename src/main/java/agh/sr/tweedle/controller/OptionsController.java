@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,9 +47,9 @@ public class OptionsController {
         return "options";
     }
     
-    @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public String changeOptions(@Valid @ModelAttribute("optionsForm") OptionsForm optionsForm, BindingResult result, final RedirectAttributes redirectAttributes){
+    public String changeOptions(@Valid @ModelAttribute("optionsForm") OptionsForm optionsForm, 
+    		BindingResult result, final RedirectAttributes redirectAttributes){
     	if (result.hasErrors()){
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.optionsForm", result);
     	    redirectAttributes.addFlashAttribute("optionsForm", optionsForm);
@@ -56,12 +57,15 @@ public class OptionsController {
     	}
     	sessionBean.getUser().setShowHidden(optionsForm.isShowHidden());
     	sessionBean.getUser().setMaxTweetAgeDays(optionsForm.getMaxTweetAgeDays());
-    	try {
-    		userDao.update(sessionBean.getUser());
-    	} catch (Exception e){
-    	    redirectAttributes.addFlashAttribute("exception",  e.toString());
-			return "redirect:/options";	
-    	}
+    	logger.warning("user = " + sessionBean.getUser());
+		userDao.update(sessionBean.getUser());
+//    	try {
+//    		userDao.update(sessionBean.getUser());
+//    	} catch (Exception e){
+//    		logger.severe(ExceptionUtils.getStackTrace(e));
+//    	    redirectAttributes.addFlashAttribute("exception",  e.toString());
+//			return "redirect:/options";	
+//    	}
     	return "redirect:/options";
     }
 }
