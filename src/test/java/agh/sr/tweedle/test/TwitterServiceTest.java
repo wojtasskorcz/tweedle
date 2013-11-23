@@ -1,9 +1,11 @@
 package agh.sr.tweedle.test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +56,7 @@ public class TwitterServiceTest {
 	@Test
 	public void thatNonHiddenTweetsAreReturned() {
 		Tweet tweet = mock(Tweet.class);
+		when(tweet.getCreatedAt()).thenReturn(new Date());
 		tweets.add(tweet);
 		List<ExtendedTweet> returnedTweets = twitterService.getTweets();
 		
@@ -65,6 +68,7 @@ public class TwitterServiceTest {
 	@Test
 	public void thatHiddenTweetsAreReturned() {
 		Tweet tweet = mock(Tweet.class);
+		when(tweet.getCreatedAt()).thenReturn(new Date());
 		tweets.add(tweet);
 		hiddenTweetIds.add(tweet.getId());
 		List<ExtendedTweet> returnedTweets = twitterService.getTweets();
@@ -72,6 +76,18 @@ public class TwitterServiceTest {
 		assertEquals(1, returnedTweets.size());
 		assertEquals(tweet.getId(), returnedTweets.get(0).getId());
 		assertTrue(returnedTweets.get(0).isHidden());
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void thatOldTweetsAreNotReturned() {
+		Tweet tweet = mock(Tweet.class);
+		when(tweet.getCreatedAt()).thenReturn(new Date(2013, 10, 1));
+		tweets.add(tweet);
+		when(sessionBean.getUser().getMaxTweetAgeDays()).thenReturn(7L);
+		List<ExtendedTweet> returnedTweets = twitterService.getTweets();
+		
+		assertEquals(0, returnedTweets.size());
 	}
 	
 	@Test
@@ -114,6 +130,16 @@ public class TwitterServiceTest {
 		String result = twitterService.setHidden(hiddenTweet.getId(), true);
 		
 		assertEquals(TwitterService.getTweetAlreadyHiddenJson(hiddenTweet.getId()), result);
+	}
+	
+	@Test
+	public void thatUserOptionsGetUpdatedInDatabase() {
+		doNothing().when(userDao).update(any(User.class));
+		Tweet tweet = mock(Tweet.class);
+		ExtendedTweet visibleTweet = new ExtendedTweet(tweet, false);
+		twitterService.setHidden(visibleTweet.getId(), false);
+		
+		verify(userDao).update(sessionBean.getUser());
 	}
 
 }

@@ -1,6 +1,7 @@
 package agh.sr.tweedle.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,27 +16,32 @@ import agh.sr.tweedle.model.SessionBean;
 
 @Service
 public class TwitterService {
-	public final static String TWEET_ALREADY_HIDDEN_JSON = 
-			"{\"exception\": \"Tweet %s was already hidden\"}";
-	public final static String TWEET_NOT_HIDDEN_JSON = 
-			"{\"exception\": \"Tweet %s was not hidden\"";
+	public final static String TWEET_ALREADY_HIDDEN_JSON = "{\"exception\": \"Tweet %s was already hidden\"}";
+	public final static String TWEET_NOT_HIDDEN_JSON = "{\"exception\": \"Tweet %s was not hidden\"";
 	public final static String SUCCESS_JSON = "{\"exception\": \"\"}";
-	
+
 	private Twitter twitter;
 	private SessionBean sessionBean;
 	private UserDao userDao;
-	
+
 	@Autowired
-	public TwitterService(Twitter twitter, SessionBean sessionBean, UserDao userDao) {
+	public TwitterService(Twitter twitter, SessionBean sessionBean,
+			UserDao userDao) {
 		this.twitter = twitter;
 		this.sessionBean = sessionBean;
 		this.userDao = userDao;
 	}
-	
+
 	public List<ExtendedTweet> getTweets() {
+		Date today = new Date();
+		long maxTweetAge = sessionBean.getUser().getMaxTweetAgeDays();
 		List<ExtendedTweet> tweets = new ArrayList<ExtendedTweet>();
 		Set<Long> hiddenTweets = sessionBean.getUser().getHiddenTweetIds();
 		for (Tweet tweet : twitter.timelineOperations().getHomeTimeline()) {
+			long tweetAge = daysBetween(today, tweet.getCreatedAt());
+			if (tweetAge > maxTweetAge) {
+				continue;
+			}
 			ExtendedTweet extTweet = null;
 			if (hiddenTweets.contains(tweet.getId())) {
 				extTweet = new ExtendedTweet(tweet, true);
@@ -46,15 +52,17 @@ public class TwitterService {
 		}
 		return tweets;
 	}
-	
+
 	public String setHidden(Long tweetId, boolean hidden) {
 		if (hidden) {
-			boolean added = sessionBean.getUser().getHiddenTweetIds().add(tweetId);
+			boolean added = sessionBean.getUser().getHiddenTweetIds()
+					.add(tweetId);
 			if (!added) {
 				return getTweetAlreadyHiddenJson(tweetId);
 			}
 		} else {
-			boolean removed = sessionBean.getUser().getHiddenTweetIds().remove(tweetId);
+			boolean removed = sessionBean.getUser().getHiddenTweetIds()
+					.remove(tweetId);
 			if (!removed) {
 				return getTweetNotHiddenJson(tweetId);
 			}
@@ -62,17 +70,23 @@ public class TwitterService {
 		userDao.update(sessionBean.getUser());
 		return getSuccessJson();
 	}
-	
+
 	public static String getTweetAlreadyHiddenJson(long tweetId) {
-		return String.format("{\"exception\": \"Tweet %s was already hidden\"}", tweetId);
+		return String.format(
+				"{\"exception\": \"Tweet %s was already hidden\"}", tweetId);
 	}
-	
+
 	public static String getTweetNotHiddenJson(long tweetId) {
-		return String.format("{\"exception\": \"Tweet %s was not hidden\"", tweetId);
+		return String.format("{\"exception\": \"Tweet %s was not hidden\"",
+				tweetId);
 	}
-	
+
 	public static String getSuccessJson() {
 		return "{\"exception\": \"\"}";
+	}
+
+	private long daysBetween(Date d1, Date d2) {
+		return (long) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 	}
 
 }
