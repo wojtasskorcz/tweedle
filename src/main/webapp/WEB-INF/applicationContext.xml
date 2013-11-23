@@ -19,6 +19,7 @@
 	<context:component-scan base-package="agh.sr.tweedle.model" />
 	<context:component-scan base-package="agh.sr.tweedle.twitter.config" />
 	<context:component-scan base-package="agh.sr.tweedle.util" />
+	<context:component-scan base-package="agh.sr.tweedle.service" />
 
 	<!-- for hibernate -->
 

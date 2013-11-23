@@ -40,7 +40,7 @@ public class LocalAuthenticationSuccessHandler extends
         User user = userDao.getUser(login);
         if (user == null) {
         	user = new User(login);
-        	userDao.persistUser(user);
+        	userDao.persist(user);
         }
         sessionBean.setUser(user);
 		super.onAuthenticationSuccess(request, response, authentication);
