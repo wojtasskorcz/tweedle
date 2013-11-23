@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import agh.sr.tweedle.dao.UserDao;
 import agh.sr.tweedle.model.ExtendedTweet;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.service.TwitterService;
@@ -33,9 +31,6 @@ public class TweetsController {
 
 	@Autowired
 	private SessionBean sessionBean;
-	
-	@Autowired
-	private UserDao userDao;
 	
 	@Autowired
 	private TwitterService twitterService;
@@ -66,24 +61,12 @@ public class TweetsController {
 	public String toggleHidden(@RequestBody String json, final RedirectAttributes redirectAttributes) {
 		long tweetId = Long.parseLong(JsonPath.with(json).getString("id"));
 		boolean hidden = JsonPath.with(json).getBoolean("hidden");
-		if (hidden) {
-			boolean added = sessionBean.getUser().getHiddenTweetIds().add(tweetId);
-			if (!added) {
-				return String.format("{\"exception\": \"Tweet %s was already hidden\"}", tweetId);
-			}
-		} else {
-			boolean removed = sessionBean.getUser().getHiddenTweetIds().remove(tweetId);
-			if (!removed) {
-				return String.format("{\"exception\": \"Tweet %s was not hidden\"", tweetId);
-			}
-		}
 		try {
-			userDao.update(sessionBean.getUser());
+			return twitterService.setHidden(tweetId, hidden);
 		} catch (Exception e) {
 			logger.severe(ExceptionUtils.getStackTrace(e));
 			redirectAttributes.addFlashAttribute("exception",  e.toString());
-			return "redirect:/";	
+			return "redirect:/";
 		}
-		return "{\"exception\": \"\"}";
 	}
 }

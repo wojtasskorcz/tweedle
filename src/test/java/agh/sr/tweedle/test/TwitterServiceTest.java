@@ -1,6 +1,8 @@
 package agh.sr.tweedle.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +17,7 @@ import org.springframework.social.twitter.api.TimelineOperations;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 
+import agh.sr.tweedle.dao.UserDao;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.model.User;
 import agh.sr.tweedle.service.TwitterService;
@@ -26,6 +29,7 @@ public class TwitterServiceTest {
 	private Twitter twitter;
 	private SessionBean sessionBean;
 	private TwitterService twitterService;
+	private UserDao userDao;
 	
 	// initialize tweets and hiddenTweetIds to empty collections 
 	// and bind them to twitter and sessionBean
@@ -44,7 +48,9 @@ public class TwitterServiceTest {
 		when(sessionBean.getUser()).thenReturn(user);
 		when(user.getHiddenTweetIds()).thenReturn(hiddenTweetIds);
 		
-		twitterService = new TwitterService(twitter, sessionBean);
+		userDao = mock(UserDao.class);
+		
+		twitterService = new TwitterService(twitter, sessionBean, userDao);
 	}
 	
 	@Test
