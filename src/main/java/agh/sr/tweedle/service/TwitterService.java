@@ -63,15 +63,15 @@ public class TwitterService {
 		return getSuccessJson();
 	}
 	
-	public String getTweetAlreadyHiddenJson(long tweetId) {
+	public static String getTweetAlreadyHiddenJson(long tweetId) {
 		return String.format("{\"exception\": \"Tweet %s was already hidden\"}", tweetId);
 	}
 	
-	public String getTweetNotHiddenJson(long tweetId) {
+	public static String getTweetNotHiddenJson(long tweetId) {
 		return String.format("{\"exception\": \"Tweet %s was not hidden\"", tweetId);
 	}
 	
-	public String getSuccessJson() {
+	public static String getSuccessJson() {
 		return "{\"exception\": \"\"}";
 	}
 

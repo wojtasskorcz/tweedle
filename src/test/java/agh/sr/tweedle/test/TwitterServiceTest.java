@@ -1,10 +1,7 @@
 package agh.sr.tweedle.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +15,7 @@ import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 
 import agh.sr.tweedle.dao.UserDao;
+import agh.sr.tweedle.model.ExtendedTweet;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.model.User;
 import agh.sr.tweedle.service.TwitterService;
@@ -57,10 +55,11 @@ public class TwitterServiceTest {
 	public void thatNonHiddenTweetsAreReturned() {
 		Tweet tweet = mock(Tweet.class);
 		tweets.add(tweet);
+		List<ExtendedTweet> returnedTweets = twitterService.getTweets();
 		
-		assertEquals(twitterService.getTweets().size(), 1);
-		assertEquals(twitterService.getTweets().get(0).getId(), tweet.getId());
-		assertFalse(twitterService.getTweets().get(0).isHidden());
+		assertEquals(1, returnedTweets.size());
+		assertEquals(tweet.getId(), returnedTweets.get(0).getId());
+		assertFalse(returnedTweets.get(0).isHidden());
 	}
 	
 	@Test
@@ -68,10 +67,53 @@ public class TwitterServiceTest {
 		Tweet tweet = mock(Tweet.class);
 		tweets.add(tweet);
 		hiddenTweetIds.add(tweet.getId());
+		List<ExtendedTweet> returnedTweets = twitterService.getTweets();
 		
-		assertEquals(twitterService.getTweets().size(), 1);
-		assertEquals(twitterService.getTweets().get(0).getId(), tweet.getId());
-		assertTrue(twitterService.getTweets().get(0).isHidden());
+		assertEquals(1, returnedTweets.size());
+		assertEquals(tweet.getId(), returnedTweets.get(0).getId());
+		assertTrue(returnedTweets.get(0).isHidden());
+	}
+	
+	@Test
+	public void thatVisibleTweetsGetHidden() {
+		doNothing().when(userDao).update(any(User.class));
+		Tweet tweet = mock(Tweet.class);
+		ExtendedTweet visibleTweet = new ExtendedTweet(tweet, false);
+		String result = twitterService.setHidden(visibleTweet.getId(), true);
+		
+		assertEquals(TwitterService.getSuccessJson(), result);
+	}
+	
+	@Test
+	public void thatVisibleTweetsCannotGetVisible() {
+		doNothing().when(userDao).update(any(User.class));
+		Tweet tweet = mock(Tweet.class);
+		ExtendedTweet visibleTweet = new ExtendedTweet(tweet, false);
+		String result = twitterService.setHidden(visibleTweet.getId(), false);
+		
+		assertEquals(TwitterService.getTweetNotHiddenJson(visibleTweet.getId()), result);
+	}
+	
+	@Test
+	public void thatHiddenTweetsGetVisible() {
+		doNothing().when(userDao).update(any(User.class));
+		Tweet tweet = mock(Tweet.class);
+		ExtendedTweet hiddenTweet = new ExtendedTweet(tweet, true);
+		hiddenTweetIds.add(hiddenTweet.getId());
+		String result = twitterService.setHidden(hiddenTweet.getId(), false);
+		
+		assertEquals(TwitterService.getSuccessJson(), result);
+	}
+	
+	@Test
+	public void thatHiddenTweetsCannotGetHidden() {
+		doNothing().when(userDao).update(any(User.class));
+		Tweet tweet = mock(Tweet.class);
+		ExtendedTweet hiddenTweet = new ExtendedTweet(tweet, true);
+		hiddenTweetIds.add(hiddenTweet.getId());
+		String result = twitterService.setHidden(hiddenTweet.getId(), true);
+		
+		assertEquals(TwitterService.getTweetAlreadyHiddenJson(hiddenTweet.getId()), result);
 	}
 
 }
