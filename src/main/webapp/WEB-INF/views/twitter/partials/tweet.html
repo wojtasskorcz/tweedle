@@ -8,7 +8,7 @@
                 	<li><a class="tweet-toggle-hidden" href="#" th:text="${tweet.hidden}? 'Show' : 'Hide'">Hide</a></li>
               	</ul>
               </span>
-			  <span class="span6"><strong th:text="${tweet.fromUser}">Tweet Author</strong></span>
+			  <span class="span6"><a href="#" th:href="${'https://twitter.com/' + tweet.fromUser}"><strong th:text="${tweet.fromUser}">Tweet Author</strong></a></span>
 	          <span class="span5 text-right pull-right" th:text="${#dates.format(tweet.createdAt, 'dd/MMM/yyyy HH:mm')}">Tweet Date</span>
 
 	
