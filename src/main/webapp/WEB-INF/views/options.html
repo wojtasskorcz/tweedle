@@ -9,6 +9,14 @@
 	<div th:if="${#objects.nullSafe(exception, false)}" th:include="partials/exceptions-bar" th:with="errorMessage=${exception}" th:remove="tag">Exceptions bar</div>
 	
 	<div class="container-fluid">
+		<div th:if="${#objects.nullSafe(optionsChanged, false)}" class="row-fluid">
+			<div class="span8 offset2">
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<span><strong>Success! </strong><span th:text="${optionsChanged}">Options changed</span></span>
+				</div>
+			</div>
+		</div>
 		<div class="row-fluid">
 			<div class="span8 offset2">
 				<div>

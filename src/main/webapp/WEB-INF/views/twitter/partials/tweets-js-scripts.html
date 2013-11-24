@@ -14,9 +14,16 @@
 		    'dataType': 'json'
 		})
 		.done(function(){
-			console.log("Success " + data);
 			if (hide){
-				$("#" + data.id).remove();	
+				var showHidden = [[${sessionBean.user.showHidden}]];
+				if (showHidden){
+					$("#" + data.id).addClass('muted').addClass('tweet-row-hidden');
+					$("#" + data.id).find('.tweet-toggle-hidden').text('Show');					
+				}
+				else{
+					$("#" + data.id).remove();	
+				}
+				
 			}
 			else {
 				$("#" + data.id).removeClass('muted').removeClass('tweet-row-hidden');

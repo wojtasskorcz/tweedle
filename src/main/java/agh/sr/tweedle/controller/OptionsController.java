@@ -64,6 +64,7 @@ public class OptionsController {
     	    redirectAttributes.addFlashAttribute("exception",  e.toString());
 			return "redirect:/options";	
     	}
+    	redirectAttributes.addFlashAttribute("optionsChanged", "Options changed.");
     	return "redirect:/options";
     }
 }
