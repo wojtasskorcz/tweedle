@@ -19,17 +19,25 @@ import org.springframework.web.context.request.WebRequest;
 import agh.sr.tweedle.model.SessionBean;
 import agh.sr.tweedle.model.User;
 
-@Component(value="twitterConnectionInterceptor") 
+/**
+ * An interceptor that handles successful login to Twitter and fills
+ * {@link agh.sr.tweedle.model.SessionBean} with appropriate information about
+ * the established connection.
+ */
+@Component(value = "twitterConnectionInterceptor")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "singleton")
 public class TwitterConnectInterceptor implements ConnectInterceptor<Twitter> {
-	private static final Logger logger = Logger.getLogger(TwitterConnectInterceptor.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(TwitterConnectInterceptor.class.getName());
 
 	@Autowired
-    private SessionBean sessionBean;
-	
+	private SessionBean sessionBean;
+
 	@Override
-	public void postConnect(Connection<Twitter> connection, WebRequest webRequest) {
-		sessionBean.setTwitterProfile(connection.getApi().userOperations().getUserProfile());
+	public void postConnect(Connection<Twitter> connection,
+			WebRequest webRequest) {
+		sessionBean.setTwitterProfile(connection.getApi().userOperations()
+				.getUserProfile());
 	}
 
 	@Override

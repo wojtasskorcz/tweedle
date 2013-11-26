@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import agh.sr.tweedle.model.SessionBean;
 
+/**
+ * Utility class facilitating connecting to Twitter.
+ */
 @Component(value="twitterConnectionUtils") 
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "singleton")
 public class TwitterConnectionUtils {
@@ -19,6 +22,10 @@ public class TwitterConnectionUtils {
 	@Autowired
     private SessionBean sessionBean;
 	
+	/**
+	 * Checks if the user is connected to Twitter.
+	 * @return true when user is connected to Twitter, false otherwise
+	 */
 	public boolean isConnectedToTwitter(){
     	if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
     		sessionBean.setTwitterProfile(null);
