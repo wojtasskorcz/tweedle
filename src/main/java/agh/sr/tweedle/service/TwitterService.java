@@ -19,9 +19,6 @@ import agh.sr.tweedle.model.SessionBean;
  */
 @Service
 public class TwitterService {
-	public final static String TWEET_ALREADY_HIDDEN_JSON = "{\"exception\": \"Tweet %s was already hidden\"}";
-	public final static String TWEET_NOT_HIDDEN_JSON = "{\"exception\": \"Tweet %s was not hidden\"";
-	public final static String SUCCESS_JSON = "{\"exception\": \"\"}";
 
 	private Twitter twitter;
 	private SessionBean sessionBean;
